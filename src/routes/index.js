@@ -2,12 +2,17 @@
 
 let error = require('mue-core/modules/error');
 
+let onlyAdmin = require('../middlewares/only-admin');
+let getUser = require('../middlewares/get-user');
+
 let bookModel = require('../modules/models').Book;
 
 const API_PREFIX = '/api/read-hub';
 const VERSION = '1';
 
 module.exports = function (app) {
+    app.use(getUser);
+
     app.get(API_PREFIX + '/version', function (request, response, next) {
         response.send(VERSION);
     });
@@ -18,7 +23,7 @@ module.exports = function (app) {
     });
 
     // add books
-    app.put(API_PREFIX + '/books', function (request, response, next) {
+    app.put(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
         var bookData = request.body;
 
         if(bookModel.isValid(bookData)){
@@ -32,20 +37,18 @@ module.exports = function (app) {
         }else{
             next(error.getHttpError(400, 'Invalid book data'))
         }
-    });
+    }]);
 
     // edit books
-    app.post(API_PREFIX + '/books/:id', function (request, response, next) {
+    app.post(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
         response.send({});
-    });
+    }]);
 
     // delete books
-    app.delete(API_PREFIX + '/books:id', function (request, response, next) {
+    app.delete(API_PREFIX + '/books:id', [onlyAdmin, function (request, response, next) {
         response.send({});
-    });
+    }]);
 
     //  CRUD Categories
     //  CRUD Tags
-
-
 };
