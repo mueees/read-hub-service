@@ -5,7 +5,7 @@ let error = require('mue-core/modules/error');
 let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
 
-let bookModel = require('../modules/models').Book;
+let Book = require('../modules/models').Book;
 
 const API_PREFIX = '/api/read-hub';
 const VERSION = '1';
@@ -19,15 +19,15 @@ module.exports = function (app) {
 
     // get books
     app.get(API_PREFIX + '/books', function (request, response, next) {
-        response.send({});
+        response.send([]);
     });
 
     // add books
     app.put(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
         var bookData = request.body;
 
-        if(bookModel.isValid(bookData)){
-            bookModel.create(bookData).then(function (book) {
+        if(Book.isValid(bookData)){
+            Book.create(bookData).then(function (book) {
                 response.send({
                     _id: book._id
                 });

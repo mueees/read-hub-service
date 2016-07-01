@@ -27,3 +27,10 @@ require('mue-core/modules/api-server')({
         console.log('Before start callback');
     }
 });
+
+// connect to DB
+require('mue-core/modules/db').initConnection({
+    port: config.get('db:port'),
+    name: config.get('db:name'),
+    host: config.get('db:host')
+});

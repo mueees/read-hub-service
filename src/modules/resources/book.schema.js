@@ -4,8 +4,8 @@ let mongoose = require('mongoose');
 
 module.exports = new mongoose.Schema({
     title: {
-        require: true,
-        type: String
+        type: String,
+        default: ''
     },
 
     description: {
@@ -14,9 +14,9 @@ module.exports = new mongoose.Schema({
     },
 
     cover: {
-        require: true,
         type: String,
-        enum: ['hard', 'soft']
+        enum: ['hard', 'soft'],
+        default: 'hard'
     },
 
     price: {
@@ -33,9 +33,9 @@ module.exports = new mongoose.Schema({
     },
 
     language: {
-        require: true,
         type: String,
-        enum: ['ru', 'ua', 'en']
+        enum: ['ru', 'ua', 'en'],
+        default: 'ru'
     },
 
     published_data: {
@@ -47,7 +47,6 @@ module.exports = new mongoose.Schema({
     },
 
     create_data: {
-        require: true,
         type: Date,
         default: new Date()
     }

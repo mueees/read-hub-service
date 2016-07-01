@@ -1,14 +1,33 @@
 'use strict';
 
-let Book = require('../resources/book.resource');
+let BookResource = require('../resources/book.resource');
 
-function create(data){
-    return Book.create(data);
+class Book {
+    constructor(data){
+        this.resource = new BookResource(data);
+    }
+
+    save (){
+        let me = this;
+
+        return this.resource.save().then(function (bookResource) {
+            return me;
+        });
+    }
+
+    get (property){
+        return this.resource[property];
+    }
+
+    static isValid(data){
+        return true;
+    }
+
+    static create (bookData){
+        var book = new Book(bookData);
+
+        return book.save();
+    }
 }
 
-function isValid(){
-    return true;
-}
-
-exports.create = create;
-exports.isValid = isValid;
+module.exports = Book;
