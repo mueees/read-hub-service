@@ -1,0 +1,1 @@
+exports.Tag = require('./model');

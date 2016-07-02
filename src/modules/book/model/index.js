@@ -1,6 +1,6 @@
 'use strict';
 
-let BookResource = require('../resources/book.resource');
+let BookResource = require('../resource/book.resource');
 
 class Book {
     constructor(data){

@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 var expect = require('chai').expect;
 var asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
-let config = require('../../config');
+let config = require('../../../config');
 
-var Book = require('./book.model');
+var Book = require('./index');
 
 describe('Base Log Model', function () {
     before(function (done) {

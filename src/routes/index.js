@@ -5,7 +5,7 @@ let error = require('mue-core/modules/error');
 let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
 
-let Book = require('../modules/models').Book;
+let Book = require('../modules/book').Book;
 
 const API_PREFIX = '/api/read-hub';
 const VERSION = '1';

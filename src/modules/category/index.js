@@ -1,0 +1,1 @@
+exports.Category = require('./model');
