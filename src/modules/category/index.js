@@ -1,1 +1,1 @@
-exports.Category = require('./model');
+exports.Category = require('./category.resource');

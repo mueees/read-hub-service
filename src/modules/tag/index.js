@@ -1,1 +1,1 @@
-exports.Tag = require('./model');
+exports.Tag = require('./tag.resource');

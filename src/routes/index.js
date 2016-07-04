@@ -5,9 +5,12 @@ let error = require('mue-core/modules/error');
 let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
 
-let Book = require('../modules/book').Book;
+let mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-const API_PREFIX = '/api/read-hub';
+let Tag = require('../modules/tag').Tag;
+
+const API_PREFIX = '/api';
 const VERSION = '1';
 
 module.exports = function (app) {
@@ -15,6 +18,14 @@ module.exports = function (app) {
 
     app.get(API_PREFIX + '/version', function (request, response, next) {
         response.send(VERSION);
+    });
+
+    app.get(API_PREFIX + '/tags', function (request, response, next) {
+        Tag.find({}).then(function (tags) {
+            response.send(tags);
+        }, function () {
+            next(error.getHttpError(400, 'Cannot get tags'));
+        });
     });
 
     // get books
@@ -26,7 +37,7 @@ module.exports = function (app) {
     app.put(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
         var bookData = request.body;
 
-        if(Book.isValid(bookData)){
+        if (Book.isValid(bookData)) {
             Book.create(bookData).then(function (book) {
                 response.send({
                     _id: book._id
@@ -34,7 +45,7 @@ module.exports = function (app) {
             }, function () {
                 next(error.getHttpError(400, 'Cannot create book'));
             });
-        }else{
+        } else {
             next(error.getHttpError(400, 'Invalid book data'))
         }
     }]);

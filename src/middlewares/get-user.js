@@ -3,7 +3,7 @@
 module.exports = function (request, response, next) {
     let userId = request.headers['mue-user-id'];
 
-    if(userId){
+    if (userId) {
         // TODO: make request and get user info
     }
 

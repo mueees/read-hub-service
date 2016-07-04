@@ -1,10 +1,11 @@
 'use strict';
 
 /*CONFIG STAGE*/
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test') {
     let path = require('path');
 
     // add another folder
+    console.warn('Takes local mue-core package');
     require('app-module-path').addPath(path.join(__dirname + './../../'));
 }
 
@@ -29,7 +30,7 @@ require('mue-core/modules/api-server')({
 });
 
 // connect to DB
-require('mue-core/modules/db').initConnection({
+require('modules/db').initConnection({
     port: config.get('db:port'),
     name: config.get('db:name'),
     host: config.get('db:host')
