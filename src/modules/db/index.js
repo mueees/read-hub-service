@@ -24,3 +24,11 @@ exports.initConnection = function (db) {
         });
     });
 };
+
+exports.closeConnection = function () {
+    return new Promise(function (resolve, reject) {
+        mongoose.connection.close();
+
+        resolve();
+    });
+};

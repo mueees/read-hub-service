@@ -25,6 +25,36 @@ module.exports = function (app) {
         });
     });
 
+    app.put(API_PREFIX + '/tags', function (request, response, next) {
+        Tag.create(request.body).then(function (tag) {
+            response.send({
+                _id: tag._id
+            });
+        }, function () {
+            next(error.getHttpError(400, 'Cannot create tag'));
+        });
+    });
+
+    app.post(API_PREFIX + '/tags/:id', function (request, response, next) {
+        Tag.update({
+            _id: request.params.id
+        }, request.body).then(function () {
+            response.send();
+        }, function () {
+            next(error.getHttpError(400, 'Cannot update tag'));
+        });
+    });
+
+    app.delete(API_PREFIX + '/tags/:id', function (request, response, next) {
+        Tag.remove({
+            _id: request.params.id
+        }).then(function () {
+            response.send();
+        }, function () {
+            next(error.getHttpError(400, 'Cannot remove tag'));
+        });
+    });
+
     // get books
     app.get(API_PREFIX + '/books', function (request, response, next) {
         response.send([]);
