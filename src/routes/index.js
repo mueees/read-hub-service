@@ -6,6 +6,7 @@ let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
 
 let Tag = require('../modules/tag').Tag;
+let Book = require('../modules/book').Book;
 let Category = require('../modules/category').Category;
 
 const API_PREFIX = '/api';
@@ -96,36 +97,44 @@ module.exports = function (app) {
         });
     });
 
-    // get books
+    // Books
     app.get(API_PREFIX + '/books', function (request, response, next) {
-        response.send([]);
+        Book.find({}).then(function (books) {
+            response.send(books);
+        }, function () {
+            next(error.getHttpError(400, 'Cannot get books'));
+        });
     });
 
-    // add books
     app.put(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
-        var bookData = request.body;
-
-        if (Book.isValid(bookData)) {
-            Book.create(bookData).then(function (book) {
-                response.send({
-                    _id: book._id
-                });
-            }, function () {
-                next(error.getHttpError(400, 'Cannot create book'));
+        Book.create(request.body).then(function (book) {
+            response.send({
+                _id: book._id
             });
-        } else {
-            next(error.getHttpError(400, 'Invalid book data'))
-        }
+        }, function () {
+            next(error.getHttpError(400, 'Cannot create book'));
+        });
     }]);
 
-    // edit books
     app.post(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
-        response.send({});
+        Book.update({
+            _id: request.params.id
+        }, request.body).then(function () {
+            response.send();
+        }, function () {
+            next(error.getHttpError(400, 'Cannot update book'));
+        });
     }]);
 
     // delete books
     app.delete(API_PREFIX + '/books:id', [onlyAdmin, function (request, response, next) {
-        response.send({});
+        Book.remove({
+            _id: request.params.id
+        }).then(function () {
+            response.send();
+        }, function () {
+            next(error.getHttpError(400, 'Cannot remove book'));
+        });
     }]);
 
     //  CRUD Categories
