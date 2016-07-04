@@ -14,6 +14,11 @@ const tagData = {
     description: 'Tag 1 Description'
 };
 
+const categoryData = {
+    name: 'Category 1',
+    description: 'Category 1 Description'
+};
+
 let interaction = new Interaction({
     baseUrl: 'http://localhost:' + config.get('network:port')
 });
@@ -59,6 +64,7 @@ describe('Routes', function () {
         });
     });
 
+    // CRUD Tag
     it('should create tag', function (done) {
         interaction.request({
             url: API_PREFIX + '/tags',
@@ -129,6 +135,87 @@ describe('Routes', function () {
         ]).then(function () {
             interaction.request({
                 url: API_PREFIX + '/tags'
+            }).then(function (response) {
+                asyncCheck(done, function () {
+                    expect(response.body.length).to.be.equal(2);
+                });
+            }, function () {
+                done(new Error('Cannot execute request'));
+            });
+        })
+    });
+
+    // CRUD Category
+    it('should create category', function (done) {
+        interaction.request({
+            url: API_PREFIX + '/categories',
+            method: 'PUT',
+            data: categoryData
+        }).then(function (response) {
+            asyncCheck(done, function () {
+                expect(response.body._id).to.be.ok;
+            });
+        }, function () {
+            done(new Error('Cannot execute request'));
+        });
+    });
+
+    it('should update category by id', function (done) {
+        interaction.request({
+            url: API_PREFIX + '/categories',
+            method: 'PUT',
+            data: categoryData
+        }).then(function (response) {
+            let categoryId = response.body._id;
+
+            interaction.request({
+                url: API_PREFIX + '/tags/' + categoryId,
+                method: 'POST',
+                data: {
+                    name: 'Category 2'
+                }
+            }).then(function () {
+                done();
+            }, function () {
+                done(new Error('Cannot execute request'));
+            });
+        });
+    });
+
+    it('should delete category by id', function (done) {
+        interaction.request({
+            url: API_PREFIX + '/categories',
+            method: 'PUT',
+            data: categoryData
+        }).then(function (response) {
+            let categoryId = response.body._id;
+
+            interaction.request({
+                url: API_PREFIX + '/categories/' + categoryId,
+                method: 'DELETE'
+            }).then(function () {
+                done();
+            }, function () {
+                done(new Error('Cannot execute request'));
+            });
+        });
+    });
+
+    it('should return all categories', function (done) {
+        Promise.all([
+            interaction.request({
+                url: API_PREFIX + '/categories',
+                method: 'PUT',
+                data: categoryData
+            }),
+            interaction.request({
+                url: API_PREFIX + '/categories',
+                method: 'PUT',
+                data: categoryData
+            })
+        ]).then(function () {
+            interaction.request({
+                url: API_PREFIX + '/categories'
             }).then(function (response) {
                 asyncCheck(done, function () {
                     expect(response.body.length).to.be.equal(2);

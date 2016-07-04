@@ -6,6 +6,7 @@ let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
 
 let Tag = require('../modules/tag').Tag;
+let Category = require('../modules/category').Category;
 
 const API_PREFIX = '/api';
 const VERSION = '1';
@@ -17,6 +18,7 @@ module.exports = function (app) {
         response.send(VERSION);
     });
 
+    // Tags
     app.get(API_PREFIX + '/tags', function (request, response, next) {
         Tag.find({}).then(function (tags) {
             response.send(tags);
@@ -52,6 +54,45 @@ module.exports = function (app) {
             response.send();
         }, function () {
             next(error.getHttpError(400, 'Cannot remove tag'));
+        });
+    });
+
+    // Category
+    app.get(API_PREFIX + '/categories', function (request, response, next) {
+        Category.find({}).then(function (categories) {
+            response.send(categories);
+        }, function () {
+            next(error.getHttpError(400, 'Cannot get categories'));
+        });
+    });
+
+    app.put(API_PREFIX + '/categories', function (request, response, next) {
+        Category.create(request.body).then(function (category) {
+            response.send({
+                _id: category._id
+            });
+        }, function () {
+            next(error.getHttpError(400, 'Cannot create category'));
+        });
+    });
+
+    app.post(API_PREFIX + '/categories/:id', function (request, response, next) {
+        Category.update({
+            _id: request.params.id
+        }, request.body).then(function () {
+            response.send();
+        }, function () {
+            next(error.getHttpError(400, 'Cannot update category'));
+        });
+    });
+
+    app.delete(API_PREFIX + '/categories/:id', function (request, response, next) {
+        Category.remove({
+            _id: request.params.id
+        }).then(function () {
+            response.send();
+        }, function () {
+            next(error.getHttpError(400, 'Cannot remove category'));
         });
     });
 
