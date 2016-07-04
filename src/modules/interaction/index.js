@@ -18,7 +18,8 @@
 const DEFAULT_METHOD = 'GET';
 
 let _ = require('lodash');
-let requestPromise = require('mue-core/modules/request-promise');
+let requestPromise = require('mue-core/modules/request-promise')
+
 let defaultOptions = {
     baseUrl: 'http://hub.mue.in.ua'
 };

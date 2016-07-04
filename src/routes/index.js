@@ -5,9 +5,6 @@ let error = require('mue-core/modules/error');
 let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
 
-let mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-
 let Tag = require('../modules/tag').Tag;
 
 const API_PREFIX = '/api';
