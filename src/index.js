@@ -1,7 +1,7 @@
 'use strict';
 
 /*CONFIG STAGE*/
-if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test') {
+if (process.env.NODE_ENV == 'development') {
     let path = require('path');
 
     // add another folder
