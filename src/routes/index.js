@@ -106,6 +106,7 @@ module.exports = function (app) {
         });
     });
 
+    // create book
     app.put(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
         Book.create(request.body).then(function (book) {
             response.send({
@@ -116,6 +117,7 @@ module.exports = function (app) {
         });
     }]);
 
+    // edit book
     app.post(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
         Book.update({
             _id: request.params.id
@@ -136,7 +138,4 @@ module.exports = function (app) {
             next(error.getHttpError(400, 'Cannot remove book'));
         });
     }]);
-
-    //  CRUD Categories
-    //  CRUD Tags
 };

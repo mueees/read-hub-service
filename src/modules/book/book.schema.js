@@ -13,21 +13,23 @@ module.exports = new mongoose.Schema({
         default: ''
     },
 
+    // this's like a quotes
+    promo: {
+        type: Array,
+        default: []
+    },
+
     cover: {
         type: String,
         enum: ['hard', 'soft'],
         default: 'hard'
     },
 
-    price: {
-        type: Number
-    },
-
     publisher: {
         type: String
     },
 
-    author: {
+    authors: {
         type: Array,
         default: []
     },
@@ -38,6 +40,7 @@ module.exports = new mongoose.Schema({
         default: 'ru'
     },
 
+    // date when book was published by publisher
     published_data: {
         type: Date
     },
@@ -46,12 +49,15 @@ module.exports = new mongoose.Schema({
         type: Number
     },
 
+    // date when book was added to DB
     create_data: {
         type: Date,
         default: new Date()
     }
 
-    /*related: {}, // for further implementation,
+    /*
+     price: {type: Number},
+     related: {}, // for further implementation,
      isExist: {}, // for further implementation,
      tags: {} // for further implementation*/
 });
