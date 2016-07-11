@@ -19,10 +19,15 @@ module.exports = new mongoose.Schema({
         default: []
     },
 
-    cover: {
+    binding: {
         type: String,
         enum: ['hard', 'soft'],
         default: 'hard'
+    },
+
+    // top image
+    cover: {
+        type: String
     },
 
     publisher: {
