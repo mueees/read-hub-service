@@ -13,8 +13,7 @@ module.exports = new mongoose.Schema({
         default: ''
     },
 
-    // this's like a quotes
-    promo: {
+    quotes: {
         type: Array,
         default: []
     },
