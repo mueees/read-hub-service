@@ -5,11 +5,15 @@ let mongoose = require('mongoose');
 module.exports = new mongoose.Schema({
     name: {
         type: String,
-        default: ''
+        default: '',
+        required: true
     },
 
     description: {
         type: String,
         default: ''
+    },
+    parentId: {
+        type: mongoose.Schema.ObjectId
     }
 });
