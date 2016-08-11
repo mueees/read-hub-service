@@ -7,7 +7,9 @@ let getUser = require('../middlewares/get-user');
 
 let Tag = require('../modules/tag').Tag;
 let Book = require('../modules/book').Book;
+let BookManager = require('../modules/book').BookManager;
 let Category = require('../modules/category').Category;
+let CategoryManager = require('../modules/category').CategoryManager;
 
 const API_PREFIX = '/api';
 const VERSION = '1';
@@ -78,7 +80,7 @@ module.exports = function (app) {
     });
 
     app.post(API_PREFIX + '/categories/:id', function (request, response, next) {
-        Category.update({
+        CategoryManager.update({
             _id: request.params.id
         }, request.body).then(function () {
             response.send();
@@ -87,10 +89,12 @@ module.exports = function (app) {
         });
     });
 
+    // delete category
     app.delete(API_PREFIX + '/categories/:id', function (request, response, next) {
-        Category.remove({
-            _id: request.params.id
-        }).then(function () {
+        Promise.all([
+            CategoryManager.remove(request.params.id),
+            BookManager.removeCategory(request.params.id)
+        ]).then(function () {
             response.send();
         }, function () {
             next(error.getHttpError(400, 'Cannot remove category'));
