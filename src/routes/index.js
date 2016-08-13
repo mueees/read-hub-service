@@ -111,7 +111,7 @@ module.exports = function (app) {
     });
 
     // create book
-    app.put(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
+    app.post(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
         Book.create(request.body).then(function (book) {
             response.send({
                 _id: book._id
@@ -122,7 +122,7 @@ module.exports = function (app) {
     }]);
 
     // edit book
-    app.post(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
+    app.put(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
         Book.update({
             _id: request.params.id
         }, request.body).then(function () {
