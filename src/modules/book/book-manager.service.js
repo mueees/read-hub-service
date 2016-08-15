@@ -8,6 +8,30 @@ function removeCategory(categoryId) {
     });
 }
 
+function removeTag(tagId) {
+    return Book.update(
+        {},
+        {
+            $pull: {
+                tags: {
+                    $in: [tagId]
+                }
+            }
+        },
+        {
+            multi: true
+        }
+    );
+}
+
+function getBooksByCategoryId() {
+    return new Promise(function (resolve) {
+        resolve();
+    });
+}
+
 module.exports = {
-    removeCategory: removeCategory
+    getBooksByCategoryId: getBooksByCategoryId,
+    removeCategory: removeCategory,
+    removeTag: removeTag
 };

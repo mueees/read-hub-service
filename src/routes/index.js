@@ -1,5 +1,7 @@
 'use strict';
 
+let _ = require('lodash');
+
 let error = require('mue-core/modules/error');
 
 let onlyAdmin = require('../middlewares/only-admin');
@@ -51,9 +53,10 @@ module.exports = function (app) {
     });
 
     app.delete(API_PREFIX + '/tags/:id', function (request, response, next) {
-        Tag.remove({
-            _id: request.params.id
-        }).then(function () {
+        Promise.all([
+            Tag.remove({_id: request.params.id}),
+            BookManager.removeTag(request.params.id)
+        ]).then(function () {
             response.send();
         }, function () {
             next(error.getHttpError(400, 'Cannot remove tag'));
@@ -91,13 +94,21 @@ module.exports = function (app) {
 
     // delete category
     app.delete(API_PREFIX + '/categories/:id', function (request, response, next) {
-        Promise.all([
-            CategoryManager.remove(request.params.id),
-            BookManager.removeCategory(request.params.id)
-        ]).then(function () {
-            response.send();
-        }, function () {
-            next(error.getHttpError(400, 'Cannot remove category'));
+        BookManager.getBooksByCategoryId(request.params.id).then(function (books) {
+            if (books.length) {
+                let bookTitles = _.map(books, 'title');
+
+                next(error.getHttpError(400, bookTitles.join(', ') + ' books contains that category'));
+            } else {
+                Promise.all([
+                    CategoryManager.remove(request.params.id),
+                    BookManager.removeCategory(request.params.id)
+                ]).then(function () {
+                    response.send();
+                }, function () {
+                    next(error.getHttpError(400, 'Cannot remove category'));
+                });
+            }
         });
     });
 
