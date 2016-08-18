@@ -26,7 +26,7 @@ function removeTag(tagId) {
 
 function getBooksByCategoryId() {
     return new Promise(function (resolve) {
-        resolve();
+        resolve([]);
     });
 }
 
