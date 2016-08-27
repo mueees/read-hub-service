@@ -64,6 +64,15 @@ module.exports = new mongoose.Schema({
         type: String
     },
 
+    isbn: {
+        type: String
+    },
+
+    relatedBooks: {
+        type: [mongoose.Schema.ObjectId],
+        default: []
+    },
+
     authors: {
         type: Array,
         default: []

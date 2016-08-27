@@ -144,7 +144,7 @@ module.exports = function (app) {
     }]);
 
     // delete books
-    app.delete(API_PREFIX + '/books:id', [onlyAdmin, function (request, response, next) {
+    app.delete(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
         Book.remove({
             _id: request.params.id
         }).then(function () {
