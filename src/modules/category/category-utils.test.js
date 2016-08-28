@@ -3,7 +3,7 @@
 let expect = require('chai').expect;
 let categoryUtils = require('./category-utils');
 
-describe.only('Category urils', function () {
+describe('Category urils', function () {
     it('should return empty array when parentCategoryId was not passed', function () {
         let ids = categoryUtils.getChildIds();
 
