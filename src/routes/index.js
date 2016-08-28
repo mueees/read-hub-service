@@ -125,6 +125,10 @@ module.exports = function (app) {
 
     // create book
     app.post(API_PREFIX + '/books', [onlyAdmin, function (request, response, next) {
+        let book = request.body;
+
+        book.createDate = new Date();
+
         Book.create(request.body).then(function (book) {
             response.send({
                 _id: book._id
@@ -136,9 +140,13 @@ module.exports = function (app) {
 
     // edit book
     app.put(API_PREFIX + '/books/:id', [onlyAdmin, function (request, response, next) {
+        let book = request.body;
+
+        delete book.createDate;
+
         Book.update({
             _id: request.params.id
-        }, request.body).then(function () {
+        }, book).then(function () {
             response.send();
         }, function () {
             next(error.getHttpError(400, 'Cannot update book'));

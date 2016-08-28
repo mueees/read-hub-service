@@ -26,8 +26,9 @@ module.exports = new mongoose.Schema({
     },
 
     // top image
-    cover: {
-        type: String
+    covers: {
+        type: [],
+        default: []
     },
 
     promo: {
@@ -78,6 +79,11 @@ module.exports = new mongoose.Schema({
         default: []
     },
 
+    authorDescription: {
+        type: String,
+        default: ''
+    },
+
     language: {
         type: String,
         enum: BOOK.languages,
@@ -94,9 +100,8 @@ module.exports = new mongoose.Schema({
     },
 
     // date when book was added to DB
-    create_data: {
-        type: Date,
-        default: new Date()
+    createDate: {
+        type: Date
     }
 
     /*
