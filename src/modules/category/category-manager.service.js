@@ -14,6 +14,8 @@ function remove(categoryId) {
 function cascadeRemovingById(categoryId) {
     return new Promise(function (resolve, reject) {
         getChildCategoryIds(categoryId).then(function (categoryIds) {
+            categoryIds.push(categoryId);
+
             Category.remove({
                 _id: {
                     $in: categoryIds
@@ -26,11 +28,14 @@ function cascadeRemovingById(categoryId) {
 function getChildCategoryIds(categoryId) {
     return new Promise(function (resolve, reject) {
         Category.find({}).then(function (categories) {
-            let childCategories = categoryUtils.getChildIds(categoryId, categories);
+            categories = _.map(categories, function (category) {
+                category = category.toObject();
+                category._id = String(category._id);
 
-            childCategories.push(categoryId);
+                return category;
+            });
 
-            resolve(childCategories);
+            resolve(categoryUtils.getChildIds(categoryId, categories));
         }, reject);
     });
 }
@@ -45,5 +50,6 @@ function update(query, data, options) {
 
 module.exports = {
     remove: remove,
-    update: update
+    update: update,
+    getChildCategoryIds: getChildCategoryIds
 };

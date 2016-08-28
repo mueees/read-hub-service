@@ -94,15 +94,17 @@ module.exports = function (app) {
 
     // delete category
     app.delete(API_PREFIX + '/categories/:id', function (request, response, next) {
-        BookManager.getBooksByCategoryId(request.params.id).then(function (books) {
+        BookManager.getBooksByCategoryIdDeep(request.params.id).then(function (books) {
             if (books.length) {
                 let bookTitles = _.map(books, 'title');
+                let bookIds = _.map(books, '_id');
 
-                next(error.getHttpError(400, bookTitles.join(', ') + ' books contains that category'));
+                next(error.getHttpError(400,
+                    bookTitles.join(', ') + ' books contains that or child categories',
+                    bookIds));
             } else {
                 Promise.all([
-                    CategoryManager.remove(request.params.id),
-                    BookManager.removeCategory(request.params.id)
+                    CategoryManager.remove(request.params.id)
                 ]).then(function () {
                     response.send();
                 }, function () {
