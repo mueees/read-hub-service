@@ -90,6 +90,12 @@ module.exports = new mongoose.Schema({
         default: BOOK.defaultLanguage
     },
 
+    availability: {
+        type: String,
+        enum: BOOK.availability,
+        default: BOOK.defaultAvailability
+    },
+
     // date when book was published by publisher
     published_data: {
         type: Date

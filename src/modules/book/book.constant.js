@@ -16,5 +16,14 @@ module.export = {
     ],
 
     languages: ['ru', 'ua', 'en'],
-    defaultLanguage: 'ru'
+
+    defaultLanguage: 'ru',
+
+    availability: [
+        'absent',
+        'available',
+        'booked'
+    ],
+
+    defaultAvailability: 'available'
 };
