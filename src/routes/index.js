@@ -12,6 +12,7 @@ let Book = require('../modules/book').Book;
 let BookManager = require('../modules/book').BookManager;
 let Category = require('../modules/category').Category;
 let CategoryManager = require('../modules/category').CategoryManager;
+let OrderManager = require('../modules/order/index').OrderManager;
 
 const API_PREFIX = '/api';
 const VERSION = '1';
@@ -163,4 +164,25 @@ module.exports = function (app) {
             next(error.getHttpError(400, 'Cannot remove book'));
         });
     }]);
+
+    // Orders
+    // return all book orders
+    app.get(API_PREFIX + '/orders', [onlyAdmin, function (request, response, next) {
+        OrderManager.find({}).then(function (orders) {
+            response.send(orders);
+        }, function () {
+            next(error.getHttpError(400, 'Cannot get orders'));
+        });
+    }]);
+
+    // create order
+    app.post(API_PREFIX + '/order', function (request, response, next) {
+        OrderManager.create(request.body).then(function (order) {
+            response.send(order);
+
+            // send response to user
+            // send email to user
+            // send email to admin email
+        });
+    });
 };
