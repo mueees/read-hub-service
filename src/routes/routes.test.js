@@ -57,7 +57,7 @@ describe('Routes', function () {
             url: API_PREFIX + '/version'
         }).then(function (response) {
             asyncCheck(done, function () {
-                expect(response.body).to.be.equal(1);
+                expect(response).to.be.equal(1);
             });
         }, function () {
             done(new Error('Cannot execute request'));
@@ -72,7 +72,7 @@ describe('Routes', function () {
             data: tagData
         }).then(function (response) {
             asyncCheck(done, function () {
-                expect(response.body._id).to.be.ok;
+                expect(response._id).to.be.ok;
             });
         }, function () {
             done(new Error('Cannot execute request'));
@@ -85,7 +85,7 @@ describe('Routes', function () {
             method: 'PUT',
             data: tagData
         }).then(function (response) {
-            let tagId = response.body._id;
+            let tagId = response._id;
 
             interaction.request({
                 url: API_PREFIX + '/tags/' + tagId,
@@ -107,7 +107,7 @@ describe('Routes', function () {
             method: 'PUT',
             data: tagData
         }).then(function (response) {
-            let tagId = response.body._id;
+            let tagId = response._id;
 
             interaction.request({
                 url: API_PREFIX + '/tags/' + tagId,
@@ -137,7 +137,7 @@ describe('Routes', function () {
                 url: API_PREFIX + '/tags'
             }).then(function (response) {
                 asyncCheck(done, function () {
-                    expect(response.body.length).to.be.equal(2);
+                    expect(response.length).to.be.equal(2);
                 });
             }, function () {
                 done(new Error('Cannot execute request'));
@@ -153,7 +153,7 @@ describe('Routes', function () {
             data: categoryData
         }).then(function (response) {
             asyncCheck(done, function () {
-                expect(response.body._id).to.be.ok;
+                expect(response._id).to.be.ok;
             });
         }, function () {
             done(new Error('Cannot execute request'));
@@ -166,7 +166,7 @@ describe('Routes', function () {
             method: 'PUT',
             data: categoryData
         }).then(function (response) {
-            let categoryId = response.body._id;
+            let categoryId = response._id;
 
             interaction.request({
                 url: API_PREFIX + '/tags/' + categoryId,
@@ -188,7 +188,7 @@ describe('Routes', function () {
             method: 'PUT',
             data: categoryData
         }).then(function (response) {
-            let categoryId = response.body._id;
+            let categoryId = response._id;
 
             interaction.request({
                 url: API_PREFIX + '/categories/' + categoryId,
@@ -218,7 +218,7 @@ describe('Routes', function () {
                 url: API_PREFIX + '/categories'
             }).then(function (response) {
                 asyncCheck(done, function () {
-                    expect(response.body.length).to.be.equal(2);
+                    expect(response.length).to.be.equal(2);
                 });
             }, function () {
                 done(new Error('Cannot execute request'));
