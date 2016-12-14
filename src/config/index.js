@@ -2,7 +2,7 @@
 
 let config = new (require("nconf").Provider)(),
     path = require("path"),
-    environment = require('mue-core/modules/environment'),
+    environment = require('../modules/environment'),
     configFile;
 
 switch (true) {

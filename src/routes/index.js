@@ -2,7 +2,7 @@
 
 let _ = require('lodash');
 
-let error = require('mue-core/modules/error');
+let errorSerivce = require('../modules/error');
 
 let onlyAdmin = require('../middlewares/only-admin');
 let getUser = require('../middlewares/get-user');
@@ -29,7 +29,7 @@ module.exports = function (app) {
         Tag.find({}).then(function (tags) {
             response.send(tags);
         }, function () {
-            next(error.getHttpError(400, 'Cannot get tags'));
+            next(errorService.getHttpError(400, 'Cannot get tags'));
         });
     });
 
@@ -39,7 +39,7 @@ module.exports = function (app) {
                 _id: tag._id
             });
         }, function () {
-            next(error.getHttpError(400, 'Cannot create tag'));
+            next(errorService.getHttpError(400, 'Cannot create tag'));
         });
     });
 
@@ -49,7 +49,7 @@ module.exports = function (app) {
         }, request.body).then(function () {
             response.send();
         }, function () {
-            next(error.getHttpError(400, 'Cannot update tag'));
+            next(errorService.getHttpError(400, 'Cannot update tag'));
         });
     });
 
@@ -60,7 +60,7 @@ module.exports = function (app) {
         ]).then(function () {
             response.send();
         }, function () {
-            next(error.getHttpError(400, 'Cannot remove tag'));
+            next(errorService.getHttpError(400, 'Cannot remove tag'));
         });
     });
 
@@ -69,7 +69,7 @@ module.exports = function (app) {
         Category.find({}).then(function (categories) {
             response.send(categories);
         }, function () {
-            next(error.getHttpError(400, 'Cannot get categories'));
+            next(errorService.getHttpError(400, 'Cannot get categories'));
         });
     });
 
@@ -79,7 +79,7 @@ module.exports = function (app) {
                 _id: category._id
             });
         }, function () {
-            next(error.getHttpError(400, 'Cannot create category'));
+            next(errorService.getHttpError(400, 'Cannot create category'));
         });
     });
 
@@ -89,7 +89,7 @@ module.exports = function (app) {
         }, request.body).then(function () {
             response.send();
         }, function () {
-            next(error.getHttpError(400, 'Cannot update category'));
+            next(errorService.getHttpError(400, 'Cannot update category'));
         });
     });
 
@@ -100,7 +100,7 @@ module.exports = function (app) {
                 let bookTitles = _.map(books, 'title');
                 let bookIds = _.map(books, '_id');
 
-                next(error.getHttpError(400,
+                next(errorService.getHttpError(400,
                     bookTitles.join(', ') + ' books contains that or child categories',
                     bookIds));
             } else {
@@ -109,7 +109,7 @@ module.exports = function (app) {
                 ]).then(function () {
                     response.send();
                 }, function () {
-                    next(error.getHttpError(400, 'Cannot remove category'));
+                    next(errorService.getHttpError(400, 'Cannot remove category'));
                 });
             }
         });
@@ -120,7 +120,7 @@ module.exports = function (app) {
         Book.find({}).then(function (books) {
             response.send(books);
         }, function () {
-            next(error.getHttpError(400, 'Cannot get books'));
+            next(errorService.getHttpError(400, 'Cannot get books'));
         });
     });
 
@@ -135,7 +135,7 @@ module.exports = function (app) {
                 _id: book._id
             });
         }, function () {
-            next(error.getHttpError(400, 'Cannot create book'));
+            next(errorService.getHttpError(400, 'Cannot create book'));
         });
     }]);
 
@@ -150,7 +150,7 @@ module.exports = function (app) {
         }, book).then(function () {
             response.send();
         }, function () {
-            next(error.getHttpError(400, 'Cannot update book'));
+            next(errorService.getHttpError(400, 'Cannot update book'));
         });
     }]);
 
@@ -161,7 +161,7 @@ module.exports = function (app) {
         }).then(function () {
             response.send();
         }, function () {
-            next(error.getHttpError(400, 'Cannot remove book'));
+            next(errorService.getHttpError(400, 'Cannot remove book'));
         });
     }]);
 
@@ -171,7 +171,7 @@ module.exports = function (app) {
         OrderManager.find({}).then(function (orders) {
             response.send(orders);
         }, function () {
-            next(error.getHttpError(400, 'Cannot get orders'));
+            next(errorService.getHttpError(400, 'Cannot get orders'));
         });
     }]);
 

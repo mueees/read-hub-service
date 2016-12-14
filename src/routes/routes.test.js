@@ -1,11 +1,12 @@
 'use strict';
 
-let config = require('config');
 let expect = require('chai').expect;
-let asyncCheck = require('mue-core/modules/test-helper').asyncCheck;
-let testHelper = require('modules/test-helper');
-let Interaction = require('modules/interaction');
-let Db = require('modules/db');
+
+let config = require('../config');
+let testHelper = require('../modules/test-helper');
+let asyncCheck = testHelper.asyncCheck;
+let Interaction = require('../modules/interaction');
+let Db = require('../modules/db');
 
 const API_PREFIX = '/api';
 

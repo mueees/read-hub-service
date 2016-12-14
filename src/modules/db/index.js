@@ -1,7 +1,7 @@
 'use strict';
 
 let mongoose = require('mongoose');
-let log = require('mue-core/modules/log')(module);
+let log = require('../log')(module);
 
 // use native Promise
 mongoose.Promise = global.Promise;
